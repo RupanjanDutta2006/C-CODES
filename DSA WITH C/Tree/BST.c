@@ -1,50 +1,58 @@
-//Wap to create/insert a  BST tree from ar array
+//Wap to create/insert a  BST tree from an array
 #include<stdio.h>
 #include<conio.h>
-struct node 
+#include<stdlib.h>
+
+typedef struct node 
 {
    int data; 	
    struct node *leftChild;
    struct node *rightChild;
-};
-struct node *root = NULL;
+} N;
+
+N *root = NULL;
+
 void insert(int);
-struct node* search(int);
+N* search(int);
 int search1(int);
-void pre_order_traversal(struct node*);
-void post_order_traversal(struct node*);
-void in_order_traversal(struct node*);
+void pre_order_traversal(N*);
+void post_order_traversal(N*);
+void inorder_traversal(N*);
+
 int main() 
 {
    int i,n,x;
    printf("Enter the Range=");
-   scanf("%d",&n);//n=5
+   scanf("%d",&n);
    int array[n];
-   //input 
-   for(i=0;i<n;i++)//i=0  0<5
+
+   for(i=0;i<n;i++)
     {
       printf("Enter the No.=");
       scanf("%d",&array[i]);
     }
-   //tree insert
-   for(i=0;i<n;i++)//i=5  <5
+
+   for(i=0;i<n;i++)
     {
-      insert(array[i]);//calling  10  20 30 15 50
+      insert(array[i]);
     }
+
     printf("Enter the No. to be Search=");
-    scanf("%d",&x);//x=30
- //search 1 process
-    if(search1(x)==1)//func. calling
+    scanf("%d",&x);
+
+    if(search1(x)==1)
      printf("\nSearch Found");
     else
      printf("\nSearch NOT Found");
-//search 2nd process
+
     printf("Enter the No. to be Search=");
-    scanf("%d",&x);//x=30
-   struct node *temp = search(x);//calling  x=30  temp=148
+    scanf("%d",&x);
+
+   N *temp = search(x);
+
    if(temp != NULL)
    {
-      printf("\n[%d] Element found. %u", temp->data,temp); //30
+      printf("\n[%d] Element found. %u", temp->data,temp);
       printf("\n");
    }
    else 
@@ -53,78 +61,81 @@ int main()
    }
            
    printf("\nPreorder traversal: ");
-   pre_order_traversal(root);//calling  root=100
+   pre_order_traversal(root);
+
    printf("\nInorder traversal: ");
-   inorder_traversal(root); //calling root =100
+   inorder_traversal(root);
+
    printf("\nPost order traversal: ");
-   post_order_traversal(root);//calling root=100
+   post_order_traversal(root);
+
    getch();
    return 0;
 }
-void insert(int data)//data =50
+
+void insert(int data)
 {
-   struct node *tempNode ;
-   tempNode= (struct node*) malloc(sizeof(struct node));
-   struct node *current;
-   struct node *parent;
+   N *tempNode ;
+   tempNode= (N*) malloc(sizeof(N));
+   N *current;
+   N *parent;
+
    tempNode->data = data;
    tempNode->leftChild = NULL;
    tempNode->rightChild = NULL;
-   //if tree is empty
+
    if(root == NULL)
   {
       root = tempNode;
    } 
    else 
    {
-      current = root;//current=100
+      current = root;
       parent = NULL;
       while(1) 
       { 
-         parent = current;  //parent=100 
-         //go to left of the tree
-         if(data < parent->data) //50<30
+         parent = current;  
+         if(data < parent->data)
          {
             current = current->leftChild;                
-            //insert to the left
             if(current == NULL) 
             {
                parent->leftChild = tempNode;
                return;
             }
-         }  //go to right of the tree
+         }  
          else
          {
-            current = current->rightChild;//NULL
-            //insert to the right
+            current = current->rightChild;
             if(current == NULL) 
             {
-               parent->rightChild = tempNode;//148
+               parent->rightChild = tempNode;
                return;
             }
          }
       }            
    }
 }
-struct node* search(int data) //data=30
+
+N* search(int data)
 {
-   struct node *current = root;//current=100
+   N *current = root;
    printf("Visiting elements: ");
-   while(current->data != data) //30!=30
+
+   while(current->data != data)
    {
       if(current != NULL)
-         printf("%d ",current->data);//10 20
-      //go to left tree
-      if(current->data > data)//20>30 
+         printf("%d ",current->data);
+
+      if(current->data > data)
       {
          current = current->leftChild;
       }
-      //else go to right tree
       else
       {                
-         current = current->rightChild;//current=148
+         current = current->rightChild;
       }
-      //not found
+
       if(current == NULL) 
       {
          return NULL;
@@ -132,25 +143,26 @@ struct node* search(int data) //data=30
    }
    return current;
 }
-int search1(int data) //data=60
+
+int search1(int data)
 {
-   struct node *current = root;
+   N *current = root;
    printf("Visiting elements: ");
-   while(current->data != data) //50!=60
+
+   while(current->data != data)
    {
-      if(current != NULL)//196!=NULL
-         printf("%d ",current->data); //10 20 30 50
-      //go to left tree
-      if(current->data > data) //50>60
+      if(current != NULL)
+         printf("%d ",current->data);
+
+      if(current->data > data)
       {
          current = current->leftChild;
       }
-      //else go to right tree
       else
       {                
-         current = current->rightChild;//current=NULL
+         current = current->rightChild;
       }
-      //not found
+
       if(current == NULL) 
       {
          return 0;
@@ -158,30 +170,33 @@ int search1(int data) //data=60
    }
    return 1;
 }
-void pre_order_traversal(struct node* root)//root=196
+
+void pre_order_traversal(N* root)
 {
    if(root != NULL)
    {
       printf("%d ",root->data);
-      pre_order_traversal(root->leftChild);//recursion
-      pre_order_traversal(root->rightChild);//recursion
+      pre_order_traversal(root->leftChild);
+      pre_order_traversal(root->rightChild);
    }
 }
-void inorder_traversal(struct node* root)//root=NULL
+
+void inorder_traversal(N* root)
 {
    if(root != NULL)
    {
-      inorder_traversal(root->leftChild);//calling NULL
+      inorder_traversal(root->leftChild);
       printf("%d ",root->data);          
-      inorder_traversal(root->rightChild);//calling  196
+      inorder_traversal(root->rightChild);
    }
 }
-void post_order_traversal(struct node* root)//root=100
+
+void post_order_traversal(N* root)
 {
    if(root != NULL)
    {
-      post_order_traversal(root->leftChild);//null
-      post_order_traversal(root->rightChild);//null
+      post_order_traversal(root->leftChild);
+      post_order_traversal(root->rightChild);
       printf("%d ", root->data);
    }
- }
+}
